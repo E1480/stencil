@@ -1,0 +1,20 @@
+[project]
+name = "stencil"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "click>=8.5.0",
+    "pyyaml>=6.0.3",
+]
+
+[tool.basedpyright]
+typeCheckingMode = "standard"
+venvPath="."
+venv=".venv"
+
+[dependency-groups]
+dev = [
+    "nuitka>=4.3",
+]

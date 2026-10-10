@@ -1,0 +1,96 @@
+uv:
+  description: |
+    Custom template with the uv package manager.
+
+  command:
+    - uv
+    - sync
+
+  files:
+    - pyproject.toml
+    - main.py
+    - README.md
+    - .python-version
+    - .gitignore
+
+  data:
+    pyproject.toml: |
+      [project]
+      name = "__PROJ_NAME__"
+      version = "0.1.0"
+      description = ""
+      readme = "README.md"
+      requires-python = ">=__PY_VER__"
+      dependencies = []
+
+      [tool.basedpyright]
+      typeCheckingMode = "standard"
+      venvPath="."
+      venv=".venv"
+
+    main.py: |
+      def main():
+          print('Hello from __PROJ_NAME__!')
+
+      if __name__ == '__main__':
+          main()
+
+    README.md: |
+      # __PROJ_NAME__
+
+    .python-version: |
+      __PY_VER__
+
+    .gitignore: |
+      # Python-generated files
+      __pycache__/
+      *.py[oc]
+      build/
+      dist/
+      wheels/
+      *.egg-info
+
+      # Virtual environments
+      .venv
+
+pip:
+  description: |
+    Custom template using python pip.
+
+  command:
+    - python
+    - -m
+    - venv
+    - .venv
+
+  files:
+    - main.py
+    - README.md
+    - .python-version
+    - .gitignore
+
+  data:
+    main.py: |
+      def main():
+          print('Hello from __PROJ_NAME__!')
+
+      if __name__ == '__main__':
+          main()
+
+    README.md: |
+      # __PROJ_NAME__
+
+    .python-version: |
+      __PY_VER__
+
+    .gitignore: |
+      # Python-generated files
+      __pycache__/
+      *.py[oc]
+      build/
+      dist/
+      wheels/
+      *.egg-info
+
+      # Virtual environments
+      .venv
