@@ -41,20 +41,25 @@ def write_files(root: Path, template: dict[str, Any], values: dict[Token, str]) 
         target.write_text(render(contents.get(filename, ""), values), encoding="utf-8")
         click.echo(f"  created {filename}")
 
-
 def run_command(root: Path, template: dict[str, Any], values: dict[Token, str]) -> None:
-    command = cast(list[str] | None, template.get("command"))
-    if not command:
+    raw = template.get("command")
+    if not raw:
         return
-    command = [render(part, values) for part in command]
-    click.echo(f"  running: {' '.join(command)}")
-    try:
-        subprocess.run(command, cwd=root, check=True)
-    except FileNotFoundError:
-        raise click.ClickException(f"'{command[0]}' is not installed or not on PATH")
-    except subprocess.CalledProcessError as e:
-        raise click.ClickException(f"Command failed with exit code {e.returncode}")
 
+    # A flat list of strings is a single command; wrap it
+    commands = cast(list[list[str]], [raw] if isinstance(raw[0], str) else raw)
+
+    for command in commands:
+        command = [render(part, values) for part in command]
+        click.echo(f"  running: {' '.join(command)}")
+        try:
+            subprocess.run(command, cwd=root, check=True)
+        except FileNotFoundError:
+            raise click.ClickException(f"'{command[0]}' is not installed or not on PATH")
+        except subprocess.CalledProcessError as e:
+            raise click.ClickException(
+                f"'{' '.join(command)}' failed with exit code {e.returncode}"
+            )
 
 @click.group()
 def app(): ...

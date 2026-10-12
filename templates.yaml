@@ -3,8 +3,8 @@ uv:
     Custom template with the uv package manager.
 
   command:
-    - uv
-    - sync
+    - [uv, sync]
+    - [git, init]
 
   files:
     - pyproject.toml
