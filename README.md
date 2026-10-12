@@ -124,3 +124,8 @@ templates.yaml
 | `Unknown template` | Check the name against `stencil list` |
 | `'uv' is not installed or not on PATH` | Install the tool the template's `command` uses |
 | Template file not found | Put `templates.yaml` in the same folder as the executable |
+
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
